@@ -135,3 +135,4 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+AUTH_USER_MODEL = "users.UserProfile"       #修改Django自带AUTH_USER表(添加自己需要的字段)
