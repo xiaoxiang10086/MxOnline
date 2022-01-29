@@ -1,0 +1,130 @@
+
+<!DOCTYPE html>
+<!-- saved from url=(0036)http://192.168.43.243:8000/register/ -->
+<html>
+
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <title>多米乐首页</title>
+    <link rel="stylesheet" type="text/css" href="../css/reset.css">
+    <link rel="stylesheet" type="text/css" href="../css/login.css">
+
+</head>
+<body>
+<div class="loginbox dialogbox">
+    <h1>账号登录</h1>
+    <div class="close jsCloseDialog"><img src="../images/dig_close.png"></div>
+    <div class="cont">
+        <form id="jsLoginForm" autocomplete="off">
+
+            <div class="box">
+                <input type="text" name="account_l" id="account_l" placeholder="手机号/邮箱">
+            </div>
+            <div class="box">
+                <input type="password" name="password_l" id="password_l" placeholder="请输入您的密码">
+            </div>
+            <div class="error btns login-form-tips" id="jsLoginTips"></div> <!--登录错误提示-->
+            <div class="btns">
+                <span><input type="checkbox" id="jsAutoLogin">&nbsp;自动登录</span>
+                <span class="forget btn fr">忘记密码</span>
+            </div>
+            <div class="button">
+                <input type="button" value="登录" id="jsLoginBtn">
+            </div>
+            <div class="btns">
+                <span class="fr">没有多米乐账号？<span class="regist btn">立即注册</span></span>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="dialog" id="jsDialog">
+    <!--提示弹出框-->
+    <div class="successbox dialogbox" id="jsSuccessTips">
+        <h1>成功提交</h1>
+        <div class="close jsCloseDialog"><img src="../images/dig_close.png"></div>
+        <div class="cont">
+            <h2>您的需求提交成功！</h2>
+            <p></p>
+        </div>
+    </div>
+</div>
+<div class="bg" id="dialogBg"></div>
+<header>
+    <div class="c-box fff-box">
+        <div class="wp header-box">
+            <p class="fl hd-tips">多米乐，您身边的装修平台！</p>
+            <ul class="fr hd-bar">
+                <li>服务电话：<span>4001008031</span></li>
+                <li><a href="/login/">[登录]</a></li>
+                <li class="active"><a href="/register/">[注册]</a></li>
+            </ul>
+        </div>
+    </div>
+</header>
+<section>
+    <div class="c-box bg-box">
+        <div class="login-box clearfix">
+            <div class="hd-login clearfix">
+                <a class="index-logo" href="/"></a>
+                <h1>用户注册</h1>
+                <a class="index-font" href="/">回到首页</a>
+            </div>
+            <div class="fl slide">
+                <div class="imgslide has-dots" style="width: 483px; overflow: hidden; height: 0px;">
+                    <ul class="imgs" style="position: relative; left: 0%; width: 0%; height: 0px;">
+
+                    </ul>
+                    <ol class="dots"></ol></div>
+                <div class="unslider-arrow prev"></div>
+                <div class="unslider-arrow next"></div>
+            </div>
+            <div class="fl form-box">
+                <div class="tab">
+                    <h2 class="active">手机注册</h2>
+                </div>
+                <div class="tab-form">
+                    <form id="mobile_register_form" method="post" action="/register/" autocomplete="off">
+
+                        <div class="form-group marb20 ">
+                            <input id="jsRegMobile" name="mobile" type="text" placeholder="请输入您的手机号码">
+                        </div>
+                        <div class="form-group marb20 blur" id="jsRefreshCode">
+                            <img src="/captcha/image/5b0fe7811ef645d9cb94cc7af579e855ec49819a/" alt="captcha" class="captcha" />
+<input type="hidden" name="captcha_0" value="5b0fe7811ef645d9cb94cc7af579e855ec49819a" required id="id_captcha_0"><input type="text" name="captcha_1" required id="id_captcha_1" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false">
+                        </div>
+                        <div class="clearfix">
+                            <div class="form-group marb8 verify-code ">
+                                <input id="jsPhoneRegCaptcha" name="code" type="text" placeholder="输入手机验证码">
+                            </div>
+                            <input class="verify-code-btn sendcode" id="jsSendCode" value="发送验证码">
+                        </div>
+                        <div class="form-group marb8 ">
+                            <input id="jsPhoneRegPwd" name="password" type="password" placeholder="请输入6-20位非中文字符密码">
+                        </div>
+                        <div class="error btns" id="jsMobileTips" ></div>
+                        <div class="auto-box marb8">
+
+                        </div>
+                        <input class="btn btn-green" id="jsMobileRegBtn" type="button" value="注册并登录">
+                    <input type="hidden" name="csrfmiddlewaretoken" value="r20XuUA2E7Aw0becQXwBbl57JQLgmKXrBBLY1FlPzoKyjZxXrwHVn9cvfwDxXFco">
+                    </form>
+                </div>
+                <p class="form-p">已有账号？<a href="http://192.168.43.243:8000/login/">[立即登录]</a></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<input id="isLogin" type="hidden" value="False">
+<script src="../js/jquery.min.js" type="text/javascript"></script>
+<script src="../js/unslider.js" type="text/javascript"></script>
+<script src="../js/validateDialog.js" type="text/javascript"></script>
+<script src="../js/login.js" type="text/javascript"></script>
+
+</body></html>
+
+
+
+
