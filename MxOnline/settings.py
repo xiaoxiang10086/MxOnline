@@ -38,12 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'xadmin.apps.XAdminConfig',
     'apps.users',
     'apps.courses',
     'apps.operations',
     'apps.organizations',
     'crispy_forms',
-    'xadmin.apps.XAdminConfig',
+    'captcha',
 ]
 
 MIDDLEWARE = [
@@ -138,3 +139,15 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = "users.UserProfile"       #修改Django自带AUTH_USER表(添加自己需要的字段)
+
+#云片网相关设置
+yp_apikey = "d6c4ddbf50ab36611d2f52041a0b949e"
+
+#redis相关配置
+REDIS_HOST = "127.0.0.1"
+REDIS_PORT = 6379
+# sudo apt-get install redis-server
+# sudo apt-get install redis-cli
+#1.如果重启django 变量不存在
+#2.随着验证码越来越多，内存占用越来越大，验证码过期
+#3. redis k-v

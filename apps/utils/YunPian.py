@@ -12,6 +12,7 @@ def send_single_sms(apikey, code, mobile):
         "text": text
     })
     re_json = json.loads(res.text)
+    re_json["code"] = 0         #模拟发送成功!
     return re_json
 
 
