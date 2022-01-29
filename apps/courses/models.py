@@ -29,6 +29,13 @@ class Course(BaseModel):
     detail = models.TextField(verbose_name="课程详情")
     image = models.ImageField(upload_to="courses/%Y/%m", verbose_name="封面图", max_length=100)
 
+    class Meta:
+        verbose_name = "课程信息"
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.name
+
 class Lesson(BaseModel):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name="课程")  #on_delete表示对应的外键数据被删除后，当前的数据应该怎么办
     name = models.CharField(max_length=100, verbose_name="章节名")
