@@ -1,13 +1,23 @@
 from django.shortcuts import render
 from django.views.generic.base import View
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 
-from apps.users.forms import LoginForm
+from apps.users.forms import LoginForm, DynamicLoginForm
+
+class LogoutView(View):
+    def get(self, request, *args, **kwargs):
+        logout(request)
+        return HttpResponseRedirect(reverse("index"))
 
 class LoginView(View):
     def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return HttpResponseRedirect(reverse("index"))
+
+        next = request.GET.get("next", "")
+        login_form = DynamicLoginForm()
         return render(request, "login.html")
          
     def post(self, request, *args, **kwargs):
