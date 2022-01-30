@@ -7,8 +7,35 @@ import redis
 from apps.utils.YunPian import send_single_sms
 from apps.utils.random_str import generate_random
 from apps.users.forms import LoginForm, DynamicLoginForm, DynamicLoginPostForm
+from apps.users.forms import RegisterGetForm, RegisterPostForm
 from MxOnline.settings import yp_apikey, REDIS_HOST, REDIS_PORT
 from apps.users.models import UserProfile
+
+class RegisterView(View):
+    def get(self, request, *args, **kwargs):
+        register_get_form = RegisterGetForm()
+        return render(request, "register.html", {
+            "register_get_form":register_get_form
+        })
+    
+    def post(self, request, *args, **kwargs):
+        register_post_form = RegisterPostForm(request.POST)
+        if register_post_form.is_valid():
+            mobile = register_post_form.cleaned_data["mobile"]
+            password = register_post_form.cleaned_data["password"]
+            # 新建一个用户
+            user = UserProfile(username=mobile)
+            user.set_password(password)
+            user.mobile = mobile
+            user.save()
+            login(request, user)
+            return HttpResponseRedirect(reverse("index"))
+        else:
+            register_get_form = RegisterGetForm()
+            return render(request, "register.html", {
+                "register_get_form":register_get_form,
+                "register_post_form": register_post_form
+            })
 
 class DynamicLoginView(View):
     def get(self, request, *args, **kwargs):
