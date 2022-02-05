@@ -16,11 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url, include
+from django.views.static import serve
 
 import xadmin
 from django.views.generic import TemplateView
 from apps.users.views import LoginView, LogoutView, SendSmsView, DynamicLoginView, RegisterView
 from django.views.decorators.csrf import csrf_exempt
+from apps.organizations.views import OrgView
+from MxOnline.settings import MEDIA_ROOT
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
@@ -32,4 +35,11 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name="logout"),
     url(r'^captcha/', include('captcha.urls')),
     url(r'^send_sms/', csrf_exempt(SendSmsView.as_view()), name="send_sms"),
+
+    #配置上传文件的访问url
+    url(r'^media/(?P<path>.*)$', serve, {"document_root":MEDIA_ROOT}),
+    # url(r'^static/(?P<path>.*)$', serve, {"document_root":STATIC_ROOT}),
+
+    #机构相关页面
+    url(r'^org/', include(('apps.organizations.urls', "organizations"), namespace="org")),
 ]
