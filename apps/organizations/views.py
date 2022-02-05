@@ -6,6 +6,21 @@ from apps.organizations.models import City, Teacher
 from apps.organizations.forms import AddAskForm
 from django.http import JsonResponse
 
+class OrgHomeView(View):
+    def get(self, request, org_id, *args, **kwargs):
+        course_org = CourseOrg.objects.get(id=int(org_id))
+        course_org.click_nums += 1
+        course_org.save()
+
+        all_courses = course_org.course_set.all()[:3]
+        all_teacher = course_org.teacher_set.all()[:1]
+
+        return render(request, "org-detail-homepage.html", {
+            "all_courses":all_courses,
+            "all_teacher":all_teacher,
+            "course_org":course_org,
+        })
+        
 class AddAskView(View):
     """
     处理用户的咨询
