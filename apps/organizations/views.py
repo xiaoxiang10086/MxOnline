@@ -6,8 +6,60 @@ from apps.organizations.models import City, Teacher
 from apps.organizations.forms import AddAskForm
 from django.http import JsonResponse
 
+class OrgDescView(View):
+    def get(self, request, org_id, *args, **kwargs):
+        current_page = "desc"
+        course_org = CourseOrg.objects.get(id=int(org_id))
+        course_org.click_nums += 1
+        course_org.save()
+
+        return render(request, "org-detail-desc.html", {
+            "course_org": course_org,
+            "current_page":current_page,
+        })
+
+class OrgCourseView(View):
+    def get(self, request, org_id, *args, **kwargs):
+        current_page = "course"
+        course_org = CourseOrg.objects.get(id=int(org_id))
+        course_org.click_nums += 1
+        course_org.save()
+
+        all_courses = course_org.course_set.all()
+
+        # 对课程机构数据进行分页
+        try:
+            page = request.GET.get('page', 1)
+        except PageNotAnInteger:
+            page = 1
+
+        p = Paginator(all_courses, per_page=1, request=request)
+        courses = p.page(page)
+
+        return render(request, "org-detail-course.html", {
+            "all_courses": courses,
+            "course_org": course_org,
+            "current_page":current_page,
+        })
+
+class OrgTeacherView(View):
+    def get(self, request, org_id, *args, **kwargs):
+        current_page = "teacher"
+        course_org = CourseOrg.objects.get(id=int(org_id))
+        course_org.click_nums += 1
+        course_org.save()
+
+        all_teacher = course_org.teacher_set.all()
+
+        return render(request, "org-detail-teachers.html", {
+            "all_teacher": all_teacher,
+            "course_org": course_org,
+            "current_page":current_page,
+        })
+
 class OrgHomeView(View):
     def get(self, request, org_id, *args, **kwargs):
+        current_page = "home"
         course_org = CourseOrg.objects.get(id=int(org_id))
         course_org.click_nums += 1
         course_org.save()
@@ -19,6 +71,7 @@ class OrgHomeView(View):
             "all_courses":all_courses,
             "all_teacher":all_teacher,
             "course_org":course_org,
+            "current_page": current_page,
         })
         
 class AddAskView(View):

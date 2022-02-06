@@ -42,4 +42,5 @@ urlpatterns = [
 
     #机构相关页面
     url(r'^org/', include(('apps.organizations.urls', "organizations"), namespace="org")),
+
 ]
