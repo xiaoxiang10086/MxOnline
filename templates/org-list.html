@@ -6,7 +6,7 @@
 <section>
     <div class="wp">
         <ul  class="crumbs">
-            <li><a href="index.html">首页</a>></li>
+            <li><a href="{% url 'index' %}">首页</a>></li>
             <li>课程机构</li>
         </ul>
     </div>
@@ -60,7 +60,7 @@
                     </dt>
                     <dd>
                         <div class="clearfix">
-                             <a href="org-detail-homepage.html">
+                            <a href="{% url 'org:home' org.id %}">
                                  <h1>{{ org.name }}</h1>
                                  <div class="pic fl">
                                     {% if org.is_auth %}
