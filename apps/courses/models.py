@@ -22,6 +22,7 @@ class Course(BaseModel):
     students = models.IntegerField(default=0, verbose_name='学习人数')
     fav_nums = models.IntegerField(default=0, verbose_name='收藏人数')
     click_nums = models.IntegerField(default=0, verbose_name="点击数")
+    notice = models.CharField(verbose_name="课程公告", max_length=300, default="")
     category = models.CharField(default=u"后端开发", max_length=20, verbose_name="课程类别")
     tag = models.CharField(default="", verbose_name="课程标签", max_length=10)
     youneed_know = models.CharField(default="", max_length=300, verbose_name="课程须知")

@@ -41,7 +41,14 @@ class DynamicLoginView(View):
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return HttpResponseRedirect(reverse("index"))
-    
+
+        next = request.GET.get("next", "")
+        login_form = DynamicLoginForm()
+        return render(request, "login.html",{
+            "login_form":login_form,
+            "next":next,
+        })
+
     def post(self, request, *args, **kwargs):
         login_form = DynamicLoginPostForm(request.POST)
         dynamic_login = True

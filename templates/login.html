@@ -70,7 +70,7 @@
                     <h2 class="{% if dynamic_login %}{% else %}active{% endif %}">账号登录</h2>
                     <h2 class="{% if dynamic_login %}active{% else %}{% endif %}">动态登录</h2>
                 </div>
-                <form class="tab-form {% if dynamic_login %}hide{% else %}{% endif %}" action="{% url 'login' %}" method="post" autocomplete="off" id="form1">
+                <form class="tab-form {% if dynamic_login %}hide{% else %}{% endif %}" action="{% url 'login' %}?next={{ next }}" method="post" autocomplete="off" id="form1">
                     {% csrf_token %}
                     <div class="form-group marb20 {% if login_form.errors.username %}errorput{% endif %}">
                         <input name="username" id="account_l" value="{{ login_form.username.value }}" type="text" placeholder="手机号/邮箱" />
@@ -84,7 +84,7 @@
                      </div>
                      <input class="btn btn-green" id="jsLoginBtn" type="submit" value="立即登录 > " />
                 </form>
-                <form class="tab-form {% if dynamic_login %}{% else %}hide{% endif %}" action="{% url 'd_login' %}" id="mobile_register_form" autocomplete="off" method="post" id="form2">
+                <form class="tab-form {% if dynamic_login %}{% else %}hide{% endif %}" action="{% url 'd_login' %}?next={{ next }}" id="mobile_register_form" autocomplete="off" method="post" id="form2">
                     {% csrf_token %}
                     <div class="form-group marb20">
                         <input id="jsRegMobile" name="mobile" value="{{ login_form.mobile.value|default_if_none:'' }}" type="text" placeholder="请输入您的手机号码">
