@@ -43,6 +43,9 @@ urlpatterns = [
     #机构相关页面
     url(r'^org/', include(('apps.organizations.urls', "organizations"), namespace="org")),
 
+    #课程相关页面
+    url(r'^course/', include(('apps.courses.urls', "courses"), namespace="course")),
+
     #用户相关操作
     url(r'^op/', include(('apps.operations.urls', "operations"), namespace="op")),
 ]
