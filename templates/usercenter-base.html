@@ -160,19 +160,17 @@
                 <input class="fl change_mobile" type="text" id="jsChangePhone" name="mobile" autocomplete="off" placeholder="输入重新绑定的手机号码">
             </div>
             <div class="box">
-                <input autocomplete="off" class="form-control-captcha find-password-captcha" id="find-password-captcha_1" name="captcha_1" placeholder="请输入验证码" type="text">
-                <input class="form-control-captcha find-password-captcha" id="find-password-captcha_0" name="captcha_0" placeholder="请输入验证码" type="hidden" value="5de5a9903eced0b941df9478f26896879956ca18">
-                &nbsp;<img src="./个人资料_files/saved_resource" alt="captcha" class="captcha">
+                {{ captcha_form.captcha }}
             </div>
             <div class="box">
-                <input class="fl" type="text" id="jsChangePhoneCode" name="mobile_code" placeholder="输入手机验证码">
+                <input class="fl" type="text" id="jsChangePhoneCode" name="code" placeholder="输入手机验证码">
                 <input class="getcode getting" type="button" id="jsChangePhoneCodeBtn" value="获取验证码">
             </div>
             <div class="error btns" id="jsChangePhoneTips" style="display: none;"></div>
             <div class="button">
                 <input type="button" value="完成" id="jsChangePhoneBtn">
             </div>
-
+            {% csrf_token %}
         </form>
     </div>
     <div class="resetpassbox dialogbox" id="jsSetNewPwd">

@@ -10,9 +10,35 @@ from apps.utils.YunPian import send_single_sms
 from apps.utils.random_str import generate_random
 from apps.users.forms import LoginForm, DynamicLoginForm, DynamicLoginPostForm, UploadImageForm
 from apps.users.forms import UserInfoForm, ChangePwdForm
-from apps.users.forms import RegisterGetForm, RegisterPostForm
+from apps.users.forms import RegisterGetForm, RegisterPostForm, UpdateMobileForm
 from MxOnline.settings import yp_apikey, REDIS_HOST, REDIS_PORT
 from apps.users.models import UserProfile
+
+class ChangeMobileView(LoginRequiredMixin, View):
+    login_url = "/login/"
+    def post(self, request, *args, **kwargs):
+        mobile_form = UpdateMobileForm(request.POST)
+        if mobile_form.is_valid():
+            mobile = mobile_form.cleaned_data["mobile"]
+            #已经存在的记录不能重复注册
+            # if request.user.mobile == mobile:
+            #     return JsonResponse({
+            #         "mobile": "和当前号码一致"
+            #     })
+            if UserProfile.objects.filter(mobile=mobile):
+                return JsonResponse({
+                    "mobile":"该手机号码已经被占用"
+                })
+            user = request.user
+            user.mobile = mobile
+            user.username = mobile
+            user.save()
+            return JsonResponse({
+                "status": "success"
+            })
+        else:
+            return JsonResponse(mobile_form.errors)
+            # logout(request)
 
 class ChangePwdView(LoginRequiredMixin, View):
     login_url = "/login/"
@@ -72,7 +98,10 @@ class UserInfoView(LoginRequiredMixin, View):
 
     login_url = "/login/"
     def get(self, request, *args, **kwargs):
-        return render(request, "usercenter-info.html")
+        captcha_form = RegisterGetForm()
+        return render(request, "usercenter-info.html", {
+            "captcha_form":captcha_form,
+        })
 
     def post(self, request, *args, **kwargs):
         user_info_form = UserInfoForm(request.POST, instance=request.user)

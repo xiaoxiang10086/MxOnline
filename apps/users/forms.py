@@ -4,6 +4,19 @@ import redis
 from MxOnline.settings import REDIS_HOST, REDIS_PORT
 from apps.users.models import UserProfile
 
+class UpdateMobileForm(forms.Form):
+    mobile = forms.CharField(required=True, min_length=11, max_length=11)
+    code = forms.CharField(required=True, min_length=4, max_length=4)
+
+    def clean_code(self):
+        mobile = self.data.get("mobile")
+        code = self.data.get("code")
+        r = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, db=0, charset="utf8", decode_responses=True)
+        redis_code = r.get(str(mobile))
+        if code != redis_code:
+            raise forms.ValidationError("验证码不正确")
+        return self.cleaned_data
+        
 class ChangePwdForm(forms.Form):
     password1 = forms.CharField(required=True, min_length=5)
     password2 = forms.CharField(required=True, min_length=5)
