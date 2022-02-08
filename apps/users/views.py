@@ -4,12 +4,20 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 import redis
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 from apps.utils.YunPian import send_single_sms
 from apps.utils.random_str import generate_random
 from apps.users.forms import LoginForm, DynamicLoginForm, DynamicLoginPostForm
 from apps.users.forms import RegisterGetForm, RegisterPostForm
 from MxOnline.settings import yp_apikey, REDIS_HOST, REDIS_PORT
 from apps.users.models import UserProfile
+
+class UserInfoView(LoginRequiredMixin, View):
+
+    login_url = "/login/"
+    def get(self, request, *args, **kwargs):
+        return render(request, "usercenter-info.html")
 
 class RegisterView(View):
     def get(self, request, *args, **kwargs):
