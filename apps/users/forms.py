@@ -4,6 +4,20 @@ import redis
 from MxOnline.settings import REDIS_HOST, REDIS_PORT
 from apps.users.models import UserProfile
 
+class ChangePwdForm(forms.Form):
+    password1 = forms.CharField(required=True, min_length=5)
+    password2 = forms.CharField(required=True, min_length=5)
+
+    def clean(self):
+        # pwd1 = self.cleaned_data["password1"]
+        # pwd2 = self.cleaned_data["password2"]
+        pwd1 = self.data.get("password1")
+        pwd2 = self.data.get("password2")
+
+        if pwd1 != pwd2:
+            raise forms.ValidationError("密码不一致")
+        return self.cleaned_data
+
 class UserInfoForm(forms.ModelForm):
     class Meta:
         model = UserProfile

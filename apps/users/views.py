@@ -9,10 +9,35 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from apps.utils.YunPian import send_single_sms
 from apps.utils.random_str import generate_random
 from apps.users.forms import LoginForm, DynamicLoginForm, DynamicLoginPostForm, UploadImageForm
-from apps.users.forms import UserInfoForm
+from apps.users.forms import UserInfoForm, ChangePwdForm
 from apps.users.forms import RegisterGetForm, RegisterPostForm
 from MxOnline.settings import yp_apikey, REDIS_HOST, REDIS_PORT
 from apps.users.models import UserProfile
+
+class ChangePwdView(LoginRequiredMixin, View):
+    login_url = "/login/"
+    def post(self, request, *args, **kwargs):
+        pwd_form = ChangePwdForm(request.POST)
+        if pwd_form.is_valid():
+            # pwd1 = request.POST.get("password1", "")
+            # pwd2 = request.POST.get("password2", "")
+            #
+            # if pwd1 != pwd2:
+            #     return JsonResponse({
+            #         "status":"fail",
+            #         "msg":"密码不一致"
+            #     })
+            pwd1 = request.POST.get("password1", "")
+            user = request.user
+            user.set_password(pwd1)
+            user.save()
+            # login(request, user)
+
+            return JsonResponse({
+                "status":"success"
+            })
+        else:
+            return JsonResponse(pwd_form.errors)
 
 class UploadImageView(LoginRequiredMixin, View):
     login_url = "/login/"

@@ -145,6 +145,7 @@
                 <div class="button">
                     <input id="jsResetPwdBtn" type="button" value="提交" />
                 </div>
+                {% csrf_token %}
             </form>
         </div>
     </div>
@@ -196,6 +197,7 @@
                 <input type="hidden" name="mobile" id="jsInpResetMobil" />
                 <input id="jsSetNewPwdBtn" type="button" value="提交" />
             </div>
+            {% csrf_token %}
         </form>
     </div>
     <div class="forgetbox dialogbox">
