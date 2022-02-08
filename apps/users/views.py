@@ -13,6 +13,19 @@ from apps.users.forms import UserInfoForm, ChangePwdForm
 from apps.users.forms import RegisterGetForm, RegisterPostForm, UpdateMobileForm
 from MxOnline.settings import yp_apikey, REDIS_HOST, REDIS_PORT
 from apps.users.models import UserProfile
+from apps.operations.models import UserCourse
+
+class MyCourseView(LoginRequiredMixin, View):
+    login_url = "/login/"
+
+    def get(self, request, *args, **kwargs):
+        current_page = "mycourse"
+        # my_courses = UserCourse.objects.filter(user=request.user)
+        
+        return render(request, "usercenter-mycourse.html",{
+            # "my_courses":my_courses,
+            "current_page":current_page
+        })
 
 class ChangeMobileView(LoginRequiredMixin, View):
     login_url = "/login/"
@@ -98,9 +111,11 @@ class UserInfoView(LoginRequiredMixin, View):
 
     login_url = "/login/"
     def get(self, request, *args, **kwargs):
+        current_page = "info"
         captcha_form = RegisterGetForm()
         return render(request, "usercenter-info.html", {
             "captcha_form":captcha_form,
+            "current_page":current_page
         })
 
     def post(self, request, *args, **kwargs):
