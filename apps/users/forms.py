@@ -4,12 +4,16 @@ import redis
 from MxOnline.settings import REDIS_HOST, REDIS_PORT
 from apps.users.models import UserProfile
 
+class UserInfoForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ["nick_name", "gender", "birthday", "address"]
 
 class UploadImageForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ["image"]
-        
+
 class RegisterGetForm(forms.Form):
     captcha = CaptchaField()
 

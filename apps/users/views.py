@@ -9,6 +9,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from apps.utils.YunPian import send_single_sms
 from apps.utils.random_str import generate_random
 from apps.users.forms import LoginForm, DynamicLoginForm, DynamicLoginPostForm, UploadImageForm
+from apps.users.forms import UserInfoForm
 from apps.users.forms import RegisterGetForm, RegisterPostForm
 from MxOnline.settings import yp_apikey, REDIS_HOST, REDIS_PORT
 from apps.users.models import UserProfile
@@ -47,6 +48,16 @@ class UserInfoView(LoginRequiredMixin, View):
     login_url = "/login/"
     def get(self, request, *args, **kwargs):
         return render(request, "usercenter-info.html")
+
+    def post(self, request, *args, **kwargs):
+        user_info_form = UserInfoForm(request.POST, instance=request.user)
+        if user_info_form.is_valid():
+            user_info_form.save()
+            return JsonResponse({
+                "status":"success"
+            })
+        else:
+            return JsonResponse(user_info_form.errors)
 
 class RegisterView(View):
     def get(self, request, *args, **kwargs):
