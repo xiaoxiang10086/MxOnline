@@ -13,7 +13,57 @@ from apps.users.forms import UserInfoForm, ChangePwdForm
 from apps.users.forms import RegisterGetForm, RegisterPostForm, UpdateMobileForm
 from MxOnline.settings import yp_apikey, REDIS_HOST, REDIS_PORT
 from apps.users.models import UserProfile
-from apps.operations.models import UserCourse
+from apps.operations.models import UserFavorite
+from apps.organizations.models import CourseOrg, Teacher
+from apps.courses.models import Course
+
+class MyFavCourseView(LoginRequiredMixin, View):
+    login_url = "/login/"
+
+    def get(self, request, *args, **kwargs):
+        current_page = "myfav_course"
+        course_list = []
+        fav_courses = UserFavorite.objects.filter(user=request.user, fav_type=1)
+        for fav_course in fav_courses:
+            try:
+                course = Course.objects.get(id=fav_course.fav_id)
+                course_list.append(course)
+            except Course.DoesNotExist as e:
+                pass
+        return render(request, "usercenter-fav-course.html",{
+            "course_list":course_list,
+            "current_page":current_page
+        })
+
+class MyFavTeacherView(LoginRequiredMixin, View):
+    login_url = "/login/"
+
+    def get(self, request, *args, **kwargs):
+        current_page = "myfav_teacher"
+        teacher_list = []
+        fav_teachers = UserFavorite.objects.filter(user=request.user, fav_type=3)
+        for fav_teacher in fav_teachers:
+            org = Teacher.objects.get(id=fav_teacher.fav_id)
+            teacher_list.append(org)
+        return render(request, "usercenter-fav-teacher.html",{
+            "teacher_list":teacher_list,
+            "current_page":current_page
+        })
+
+class MyFavOrgView(LoginRequiredMixin, View):
+    login_url = "/login/"
+
+    def get(self, request, *args, **kwargs):
+        current_page = "myfavorg"
+        org_list = []
+        fav_orgs = UserFavorite.objects.filter(user=request.user, fav_type=2)
+        for fav_org in fav_orgs:
+            org = CourseOrg.objects.get(id=fav_org.fav_id)
+            org_list.append(org)
+        return render(request, "usercenter-fav-org.html",{
+            "org_list":org_list,
+            "current_page":current_page
+        })
 
 class MyCourseView(LoginRequiredMixin, View):
     login_url = "/login/"
