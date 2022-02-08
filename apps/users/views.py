@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 import redis
 from django.contrib.auth.mixins import LoginRequiredMixin
+from pure_pagination import Paginator, PageNotAnInteger
 
 from apps.utils.YunPian import send_single_sms
 from apps.utils.random_str import generate_random
@@ -13,9 +14,43 @@ from apps.users.forms import UserInfoForm, ChangePwdForm
 from apps.users.forms import RegisterGetForm, RegisterPostForm, UpdateMobileForm
 from MxOnline.settings import yp_apikey, REDIS_HOST, REDIS_PORT
 from apps.users.models import UserProfile
-from apps.operations.models import UserFavorite
+from apps.operations.models import UserFavorite, UserMessage
 from apps.organizations.models import CourseOrg, Teacher
 from apps.courses.models import Course
+
+def message_nums(request):
+    """
+    Add media-related context variables to the context.
+    """
+    if request.user.is_authenticated:
+        return {'unread_nums': request.user.usermessage_set.filter(has_read=False).count()}
+    else:
+        return {}
+
+class MyMessageView(LoginRequiredMixin, View):
+    login_url = "/login/"
+
+    def get(self, request, *args, **kwargs):
+        messages = UserMessage.objects.filter(user=request.user)
+        current_page = "message"
+        for message in messages:
+            message.has_read = True
+            message.save()
+
+        # 对讲师数据进行分页
+        try:
+            page = request.GET.get('page', 1)
+        except PageNotAnInteger:
+            page = 1
+
+        p = Paginator(messages, per_page=5, request=request)
+        messages = p.page(page)
+
+        
+        return render(request, "usercenter-message.html",{
+            "messages":messages,
+            "current_page":current_page
+        })
 
 class MyFavCourseView(LoginRequiredMixin, View):
     login_url = "/login/"
