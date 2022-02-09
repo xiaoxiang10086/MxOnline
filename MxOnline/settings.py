@@ -161,6 +161,7 @@ REDIS_PORT = 6379
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 #分页相关设置
 PAGINATION_SETTINGS = {
