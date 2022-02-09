@@ -74,7 +74,9 @@
             <div class="fl slide">
                 <div class="imgslide has-dots" style="width: 483px; overflow: hidden; height: 0px;">
                     <ul class="imgs" style="position: relative; left: 0%; width: 0%; height: 0px;">
-
+                        {% for banner in banners %}
+                            <li><a href="{{ banner.url }}"><img width="483" height="472" src="{{ banner.image.url }}" /></a></li>
+                        {% endfor %}
                     </ul>
                     <ol class="dots"></ol></div>
                 <div class="unslider-arrow prev"></div>

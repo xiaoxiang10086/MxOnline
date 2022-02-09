@@ -57,9 +57,9 @@
             <div class="fl slide">
                 <div class="imgslide">
                     <ul class="imgs">
-                            <li><a href=""><img width="483" height="472" src="/static/images/mysql.jpg" /></a></li>
-                            <li><a href=""><img width="483" height="472" src="/static/images/mysql.jpg" /></a></li>
-                            <li><a href=""><img width="483" height="472" src="/static/images/mysql.jpg" /></a></li>
+                        {% for banner in banners %}
+                            <li><a href="{{ banner.url }}"><img width="483" height="472" src="{{ banner.image.url }}" /></a></li>
+                        {% endfor %}
                     </ul>
                 </div>
                 <div class="unslider-arrow prev"></div>
