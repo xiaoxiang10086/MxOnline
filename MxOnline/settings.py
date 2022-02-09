@@ -31,6 +31,10 @@ ALLOWED_HOSTS = ['101.37.35.25']
 
 # Application definition
 
+AUTHENTICATION_BACKENDS = [
+    "apps.users.views.CustomAuth"
+]
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',

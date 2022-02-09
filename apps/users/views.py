@@ -6,6 +6,8 @@ from django.urls import reverse
 import redis
 from django.contrib.auth.mixins import LoginRequiredMixin
 from pure_pagination import Paginator, PageNotAnInteger
+from django.contrib.auth.backends import ModelBackend
+from django.db.models import Q
 
 from apps.utils.YunPian import send_single_sms
 from apps.utils.random_str import generate_random
@@ -17,6 +19,15 @@ from apps.users.models import UserProfile
 from apps.operations.models import UserFavorite, UserMessage, Banner
 from apps.organizations.models import CourseOrg, Teacher
 from apps.courses.models import Course
+
+class CustomAuth(ModelBackend):
+    def authenticate(self, request, username=None, password=None, **kwargs):
+        try:
+            user = UserProfile.objects.get(Q(username=username)|Q(mobile=username))
+            if user.check_password(password):
+                return user
+        except Exception as e:
+            return None
 
 def message_nums(request):
     """

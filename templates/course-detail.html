@@ -40,9 +40,9 @@
                             <li><span class="pram word3">章&nbsp;节&nbsp;数：</span><span>{{ course.lesson_nums }}</span></li>
                             <li><span class="pram word3">课程类别：</span><span title="">{{ course.category }}</span></li>
 							<li class="piclist"><span class="pram word4">学习用户：</span>
-                                
-                                    <span class="pic"><img width="40" height="40" src="../media/image/2016/12/default_big_14.png"/></span>
-                                
+                                {% for user_course in course.usercourse_set.all|slice:3 %}
+                                    <span class="pic"><img width="40" height="40" src="{{ user_course.user.image.url }}"/></span>
+                                {% endfor %}
 							</li>
 						</ul>
 						<div class="btns">
