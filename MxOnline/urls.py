@@ -24,10 +24,11 @@ from apps.users.views import LoginView, LogoutView, SendSmsView, DynamicLoginVie
 from django.views.decorators.csrf import csrf_exempt
 from apps.organizations.views import OrgView
 from MxOnline.settings import MEDIA_ROOT
+from apps.operations.views import IndexView
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
-    path('', TemplateView.as_view(template_name="index.html"), name="index"),
+    path('', IndexView.as_view(), name="index"),
     path('xadmin/', xadmin.site.urls),
     path('login/', LoginView.as_view(), name="login"),
     path('register/', RegisterView.as_view(), name="register"),

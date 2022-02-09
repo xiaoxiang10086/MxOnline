@@ -1,11 +1,26 @@
 from django.shortcuts import render
 from django.views.generic import View
 from django.http import JsonResponse
+from django.shortcuts import render
 
 from apps.operations.forms import UserFavForm, CommentsForm
 from apps.operations.models import UserFavorite, CourseComments
 from apps.courses.models import Course
 from apps.organizations.models import CourseOrg, Teacher
+from apps.operations.models import Banner
+
+class IndexView(View):
+    def get(self, request, *args, **kwargs):
+        banners = Banner.objects.all().order_by("index")
+        courses = Course.objects.filter(is_banner=False)[:6]
+        banner_courses = Course.objects.filter(is_banner=True)
+        course_orgs = CourseOrg.objects.all()[:15]
+        return render(request, "index.html",{
+            "banners":banners,
+            "courses":courses,
+            "banner_courses":banner_courses,
+            "course_orgs":course_orgs
+        })
 
 class CommentView(View):
     def post(self, request, *args, **kwargs):
