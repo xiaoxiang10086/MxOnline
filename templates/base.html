@@ -59,8 +59,10 @@
                     <a href="{% url 'index' %}"><img class="fl" src="{% static 'images/logo.jpg' %}"/></a>
                     <div class="searchbox fr">
                         <div class="selectContainer fl">
-                            <span class="selectOption" id="jsSelectOption" data-value="course">
-                                公开课
+                            <span class="selectOption" id="jsSelectOption" data-value="{% if s_type %}{{ s_type }}{% else %}course{% endif %}">
+                                {% if not s_type or s_type == 'course' %}公开课{% endif %}
+                                {% if s_type == 'org' %}课程机构{% endif %}
+                                {% if s_type == 'teacher' %}授课老师{% endif %}
                             </span>
                             <ul class="selectMenu" id="jsSelectMenu">
                                 <li data-value="course">公开课</li>
@@ -68,7 +70,7 @@
                                 <li data-value="teacher">授课老师</li>
                             </ul>
                         </div>
-                        <input id="search_keywords" class="fl" type="text" value="" placeholder="请输入搜索内容"/>
+                        <input id="search_keywords" class="fl" type="text" value="{{ keywords }}" placeholder="请输入搜索内容"/>
                         <img class="search_btn fr" id="jsSearchBtn" src="{% static 'images/search_btn.png' %}"/>
                     </div>
                 </div>
